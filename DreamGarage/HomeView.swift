@@ -48,7 +48,7 @@ struct HomeView: View {
     
     let categories = [
 
-        "Sports",
+//        "Sports",
         "Luxury",
         "SUV",
         "Electric",
