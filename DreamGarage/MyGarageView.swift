@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct MyGarageView: View {
+    let garageCars = cars.filter { $0.isGarage }
     var body: some View {
         
         NavigationStack{
@@ -30,7 +31,9 @@ struct MyGarageView: View {
                             .overlay(
                                 HStack{
                                     VStack(alignment: .leading,spacing: 10){
-                                        Text("12")
+//                                        Text("12")
+
+                                        Text("\(garageCars.count)")
                                             .font(.system(size:40,weight: .bold))
                                             .foregroundColor(.yellow)
                                         
@@ -38,7 +41,8 @@ struct MyGarageView: View {
                                             .font(.headline)
                                             .foregroundColor(.white)
                                         
-                                        Text("Your premium coloection")
+//                                        Text("Your premium coloection")
+                                        Text("Add cars from Car Details")
                                             .font(.caption)
                                             .foregroundColor(.gray)
                                     }
@@ -61,8 +65,9 @@ struct MyGarageView: View {
                         LazyVGrid(
                             columns: [GridItem(.flexible()),GridItem(.flexible())],spacing:16){
                           
-                                ForEach(cars){car in
-                                    NavigationLink{
+//                                ForEach(cars){car in
+                                ForEach(garageCars) { car in
+                                NavigationLink{
                                         CarDetailView(car:car)
                                     }label: {
                                         CarCard(car:car)

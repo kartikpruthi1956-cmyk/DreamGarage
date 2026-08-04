@@ -1,6 +1,6 @@
 import Foundation
 
-struct Car: Identifiable {
+struct Car: Identifiable, Hashable {
 
     let id = UUID()
 
@@ -23,4 +23,8 @@ struct Car: Identifiable {
     let category: String
     
     var isFavourite: Bool = false
+    
+    var isGarage: Bool = false
+    
+    var isViewed: Bool = false
 }

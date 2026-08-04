@@ -12,6 +12,7 @@ struct LoginView: View {
     @State private var goToSignUp = false
     @State private var isLoggedin: Bool = false
     @State private var message = ""
+    @State private var animateLogo = false
     
     var body: some View {
         if isLoggedin{
@@ -19,7 +20,11 @@ struct LoginView: View {
         }else{
         NavigationStack{
             ZStack {
-                
+                Circle()
+                    .fill(Color.yellow.opacity(0.2))
+                    .frame(width: 300, height: 300)
+                    .blur(radius: 100)
+                    .offset(y: -250)
                 LinearGradient(
                     colors: [ .black],
                     startPoint: .top,
@@ -29,10 +34,15 @@ struct LoginView: View {
                 
                 VStack(spacing: 25) {
                     
+//                    Image(systemName: "car.fill")
+//                        .font(.system(size: 70))
+//                        .foregroundColor(.yellow)
+//
                     Image(systemName: "car.fill")
-                        .font(.system(size: 70))
+                        .font(.system(size: 80))
                         .foregroundColor(.yellow)
-                    
+                        .scaleEffect(animateLogo ? 1.1 : 0.9)
+                        .shadow(color: .yellow, radius: 20)
                     Text("DreamGarage")
                         .font(.largeTitle.bold())
                         .foregroundColor(.yellow)
@@ -42,11 +52,16 @@ struct LoginView: View {
                         HStack {
                             
                             Image(systemName: "envelope")
-                            
-                            TextField("Email", text: $email)
+                            TextField("", text: $email, prompt: Text("Email").foregroundStyle(Color.white))
+                               
                         }
-                        .padding()
-                        .background(Color.gray)
+                                .padding()
+                                .foregroundColor(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .stroke(Color.yellow, lineWidth: 2)
+                                )
+                                
                         .cornerRadius(15)
                         
                         HStack {
@@ -55,13 +70,13 @@ struct LoginView: View {
                             
                             if showPassword {
                                 
-                                TextField("Password", text: $password)
-                                
+                                TextField("", text: $password, prompt: Text("Password").foregroundStyle(Color.white))
+                                 
                             } else {
                                 
                                 SecureField("Password", text: $password)
                             }
-                            
+                                
                             Button {
                                 
                                 showPassword.toggle()
@@ -72,7 +87,13 @@ struct LoginView: View {
                             }
                         }
                         .padding()
-                        .background(Color.gray)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 15)
+                                .stroke(Color.yellow, lineWidth: 2)
+                        )
+                        .foregroundColor(Color.white)
+                        .background(Color.black)
+                        .background(.ultraThinMaterial)
                         .cornerRadius(15)
                         
                         HStack {
@@ -104,7 +125,22 @@ struct LoginView: View {
                             .foregroundColor(.white)
                             .frame(maxWidth: .infinity)
                             .padding()
-                            .background(Color.blue)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .stroke(Color.yellow, lineWidth: 2)
+                            )
+//                            .background(Color.blue)
+//                            .background(
+//
+//                                LinearGradient(
+//                                    colors: [.yellow, .purple],
+//                                    startPoint: .leading,
+//                                    endPoint: .trailing
+//                                )
+//
+//                            )
+                        
+                            .shadow(color: .blue.opacity(0.5), radius: 15)
                             .cornerRadius(15)
                     }
                     
@@ -125,6 +161,22 @@ struct LoginView: View {
                                             .background(Color.blue)
                                             .cornerRadius(15)
                                         }
+                    Button {
+
+                    } label: {
+
+                        HStack {
+
+                            Image(systemName: "apple.logo")
+
+                            Text("Continue with Apple")
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(15)
+                    }
                     
                     HStack {
                         
@@ -137,6 +189,16 @@ struct LoginView: View {
                             
                         }
                         .foregroundColor(.yellow)
+                    }
+                }
+                .onAppear {
+
+                    withAnimation(
+                        .easeInOut(duration: 1.5)
+                        .repeatForever(autoreverses: true)
+                    ) {
+
+                        animateLogo.toggle()
                     }
                 }
                 .padding()
@@ -153,9 +215,11 @@ struct LoginView: View {
                 }
             }
         }
+        .toolbar(.hidden)
     }
     }
 }
+    
 #Preview {
     LoginView()
 }

@@ -3,7 +3,11 @@ import SwiftUI
 struct CarCard: View {
 
     @State var car: Car
+//    @Binding var car: Car
+//    @EnvironmentObject var carStore: CarStore
 
+//    var car: Car
+    
     var body: some View {
 
         VStack(alignment: .leading, spacing: 10) {

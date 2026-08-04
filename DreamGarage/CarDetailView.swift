@@ -2,7 +2,9 @@ import SwiftUI
 
 struct CarDetailView: View {
 
-    let car: Car
+//    let car: Car
+    @State var car: Car
+    @State private var addedToGarage = false
 
     var body: some View {
 
@@ -212,6 +214,26 @@ struct CarDetailView: View {
                         .frame(maxWidth: .infinity)
                         .frame(height: 58)
                         .background(Color.yellow)
+                        .cornerRadius(18)
+                    }
+                    Button {
+
+                        car.isGarage.toggle()
+
+                    } label: {
+
+                        HStack {
+
+                            Image(systemName: car.isGarage ? "checkmark.circle.fill" : "plus.circle.fill")
+
+                            Text(car.isGarage ? "Added to Garage" : "Add to Garage")
+                                .fontWeight(.bold)
+
+                        }
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 58)
+                        .background(Color.blue)
                         .cornerRadius(18)
                     }
                     .padding(.top, 15)

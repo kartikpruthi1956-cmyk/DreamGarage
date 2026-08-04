@@ -4,7 +4,7 @@ struct ProfileView: View {
 
     @State private var showLogoutAlert = false
     @State private var isLoggedOut = false
-    
+    @State private var animate = false
     var body: some View {
 
         NavigationStack {
