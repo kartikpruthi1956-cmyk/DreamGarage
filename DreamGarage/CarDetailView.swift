@@ -5,6 +5,7 @@ struct CarDetailView: View {
 //    let car: Car
     @State var car: Car
     @State private var addedToGarage = false
+    @State private var showBookingSheet = false
 
     var body: some View {
 
@@ -76,31 +77,6 @@ struct CarDetailView: View {
 
                     Divider()
 
-//                    HStack {
-//
-//                        VStack(alignment: .leading) {
-//
-//                            Text("Top Speed")
-//                                .foregroundColor(.white)
-//
-//                            Text(car.topSpeed)
-//                                .fontWeight(.bold)
-//                                .foregroundColor(.gray)
-//                        }
-//
-//                        Spacer()
-//
-//                        VStack(alignment: .leading) {
-//
-//                            Text("Horsepower")
-//                                .foregroundColor(.white)
-//
-//                            Text(car.horsepower)
-//                                .fontWeight(.bold)
-//                                .foregroundColor(.gray)
-//                        }
-//
-//                    }
                     HStack(spacing: 15) {
 
                         VStack(spacing: 10) {
@@ -143,15 +119,6 @@ struct CarDetailView: View {
                     }
                     Divider()
 
-//                    VStack(alignment: .leading) {
-//
-//                        Text("Engine")
-//                            .foregroundColor(.white)
-//
-//                        Text(car.engine)
-//                            .fontWeight(.bold)
-//                            .foregroundColor(.gray)
-//                    }
                     VStack(alignment: .leading, spacing: 12) {
 
                         Label("Engine", systemImage: "gear")
@@ -185,20 +152,24 @@ struct CarDetailView: View {
                     .padding()
                     .background(Color.white.opacity(0.08))
                     .cornerRadius(18)
+                    
+                    Button {
 
-//                    Button {
-//
-//                    } label: {
-//
-//                        Text("Explore Now")
-//                            .fontWeight(.bold)
-//                            .foregroundColor(.black)
-//                            .frame(maxWidth: .infinity)
-//                            .frame(height: 55)
-//                            .background(Color.yellow)
-//                            .cornerRadius(15)
-//
-//                    }
+                        showBookingSheet = true
+
+                    } label: {
+
+                        Text("Book Test Drive")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color.yellow)
+                            .cornerRadius(15)
+                    }
+                    .padding(.top, 10)
+
+
                     Button {
 
                     } label: {
@@ -207,7 +178,7 @@ struct CarDetailView: View {
 
                             Image(systemName: "car.fill")
 
-                            Text("Book Test Drive")
+                            Text("Book your car")
                                 .fontWeight(.bold)
                         }
                         .foregroundColor(.black)
@@ -236,10 +207,14 @@ struct CarDetailView: View {
                         .background(Color.blue)
                         .cornerRadius(18)
                     }
-                    .padding(.top, 15)
+//                    .padding(.top, 15)
+                    
                 }
                 .padding()
+                .sheet(isPresented: $showBookingSheet) {
 
+                    BookTestDriveView(car: car)
+                }
             }
 
         }

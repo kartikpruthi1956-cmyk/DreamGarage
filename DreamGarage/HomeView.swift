@@ -2,7 +2,7 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var showMenu = false
-
+    
     @State private var selectedCategory = "X"
     
     @State private var selectedBrand = ""
@@ -12,50 +12,50 @@ struct HomeView: View {
     @State private var currentIndex = 0
     
     var brandCars: [Car] {
-
+        
         if selectedBrand.isEmpty {
             return []
         }
-
+        
         return cars.filter {
             $0.name.localizedCaseInsensitiveContains(selectedBrand)
         }
-
+        
     }
     
     @State  private var searchText = ""
     var searchResults: [Car] {
-
+        
         if searchText.isEmpty {
             return []
         }
-
+        
         return cars.filter {
             $0.name.localizedCaseInsensitiveContains(searchText)
         }
     }
-
+    
     var categoryResults: [Car] {
-
+        
         if selectedCategory == "X" {
             return []
         }
-
+        
         return cars.filter {
             $0.category == selectedCategory
         }
     }
     
     let categories = [
-
+        
         "Sports",
         "Luxury",
         "SUV",
         "Electric",
         "Classic"
     ]
-
-   
+    
+    
     var body: some View {
         NavigationStack{
             ZStack{
@@ -65,81 +65,83 @@ struct HomeView: View {
                     VStack(alignment: .leading,spacing:10){
                         
                         HStack {
-
+                            
                             VStack(alignment: .leading, spacing: 4) {
-
+                                
                                 Text("Hello Kartik 👋")
                                     .foregroundColor(.gray)
-
+                                
                                 Text("Dream Garage")
                                     .font(.largeTitle.bold())
                                     .foregroundColor(.white)
                             }
-
+                            
                             Spacer(minLength: 20)
-
+                            
                             HStack{
-                                    Button{
-                                    }label:{
-                                        Image(systemName: "bell.fill")
-                                            .foregroundColor(.yellow)
-                                            .font(.title2)
-                                            }
-                                    NavigationLink{
-                                        ProfileView()
-                                    }label: {
-                                        Image(systemName: "person.crop.circle.fill")
-                                            .font(.system(size:30))
-                                            .foregroundColor(.yellow)
-                                            .font(.title2)
+                                Button{
+                                }label:{
+                                    Image(systemName: "bell.fill")
+                                        .foregroundColor(.yellow)
+                                        .font(.title2)
                                 }
-                                            .buttonStyle(.plain)
+                                NavigationLink{
+                                    ProfileView()
+                                }label: {
+                                    Image(systemName: "person.crop.circle.fill")
+                                        .font(.system(size:30))
+                                        .foregroundColor(.yellow)
+                                        .font(.title2)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity)
-                        
+                        Spacer()
                         ZStack{
-
+                            
                             HStack(spacing: 12) {
                                 
                                 Image(systemName: "magnifyingglass")
                                     .font(.title3)
-                                    .foregroundColor(.yellow)
+                                    .foregroundColor(.white)
                                 
-                                TextField("", text: $searchText, prompt: Text("Search your dream car...").foregroundStyle(Color.yellow))
-                                   
+                                TextField("", text: $searchText, prompt: Text("Search your dream car...").foregroundStyle(Color.white))
+                                
                                     .font(.title3)
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.white)
                                     .tint(.yellow)
                                 
                             }
                             .padding()
-                            .frame(maxWidth: 1000)
+//                            .frame(maxWidth: 390)
+//                            .frame(height: 50)
+                            .frame(maxWidth: .infinity)
                             .frame(height: 50)
-                            .padding(.horizontal)
+                            .padding(.horizontal,15)
                             .cornerRadius(25)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 15)
+                                RoundedRectangle(cornerRadius: 25)
                                     .stroke(Color.yellow, lineWidth: 2)
                             )
                             
                             
                         }
                         if !searchText.isEmpty {
-
+                            
                             Text("Search Results")
                                 .font(.title2.bold())
                                 .foregroundColor(.white)
                                 .padding(.horizontal)
-
+                            
                             LazyVGrid(columns: [
                                 GridItem(.flexible()),
                                 GridItem(.flexible())
                             ], spacing: 20) {
-
+                                
                                 ForEach(searchResults) { car in
-
+                                    
                                     NavigationLink {
                                         CarDetailView(car: car)
                                     } label: {
@@ -150,20 +152,21 @@ struct HomeView: View {
                             }
                             .padding(.horizontal)
                         }
+                        Spacer()
                         TabView {
-
+                            
                             FeatureCard(
                                 imageName: "ferrari",
                                 carName: "Ferrari SF90",
                                 price: "$650,000"
                             )
-
+                            
                             FeatureCard(
                                 imageName: "Lamborgini",
                                 carName: "Lamborghini Huracan",
                                 price: "$720,000"
                             )
-
+                            
                             FeatureCard(
                                 imageName: "Porsche",
                                 carName: "Porsche 911",
@@ -175,28 +178,29 @@ struct HomeView: View {
                         .tabViewStyle(.page)
                         .frame(height: 250)
                         
+                        Spacer()
                         NavigationLink {
-
+                            
                             CompareCarsView()
-
+                            
                         } label: {
-
+                            
                             HStack {
-
+                                
                                 Image(systemName: "arrow.left.and.right.circle.fill")
                                     .font(.title2)
-
+                                
                                 VStack(alignment: .leading) {
-
+                                    
                                     Text("Compare Cars")
                                         .font(.headline)
-
+                                    
                                     Text("Compare any two cars")
                                         .font(.caption)
                                 }
-
+                                
                                 Spacer()
-
+                                
                                 Image(systemName: "chevron.right")
                             }
                             .foregroundColor(.white)
@@ -218,102 +222,79 @@ struct HomeView: View {
                             .foregroundColor(.white)
                             .padding()
                         ScrollView(.horizontal, showsIndicators: false) {
-
+                            
                             HStack(spacing: 15) {
-
+                                
                                 ForEach(categories, id: \.self) { category in
-
+                                    
                                     Button {
-
+                                        
                                         selectedCategory = category
-
+                                        
                                     } label: {
-
+                                        
                                         CategoryChip(
                                             title: category,
                                             isSelected: selectedCategory == category
                                         )
-
+                                        
                                     }
                                     .buttonStyle(.plain)
-
+                                    
                                 }
-
+                                
                             }
-
+                            
                         }     .padding()
-//                        if selectedCategory != "X" {
-//
-//                            Text("\(selectedCategory) Cars")
-//                                .font(.title2.bold())
-//                                .foregroundColor(.white)
-//                                .padding(.horizontal)
+                    
                         if !selectedCategory.isEmpty {
-
+                            
                             HStack {
-
+                                
                                 Text("\(selectedCategory) Cars")
                                     .font(.title2)
                                     .fontWeight(.bold)
-
+                                
                                 Spacer()
-
+                                
                                 Button {
-
+                                    
                                     selectedCategory = ""
-
+                                    
                                 } label: {
-
+                                    
                                     Image(systemName: "xmark.circle.fill")
                                         .font(.title2)
                                         .foregroundColor(.yellow)
                                 }
                             }
                             .padding(.horizontal)
-
-                            // Yahan category wali cars dikhengi
-                        }
-
-//                            LazyVGrid(columns: [
-//                                GridItem(.flexible()),
-//                                GridItem(.flexible())
-//                            ], spacing: 20) {
-//
-//                                ForEach(categoryResults) { car in
-//
-//                                    NavigationLink {
-//                                        CarDetailView(car: car)
-//                                    } label: {
-//                                        CarCard(car: car)
-//                                    }
-//                                    .buttonStyle(.plain)
-//                                }
-//                            }
-                        ScrollView(.horizontal, showsIndicators: false) {
-
-                            LazyHStack(spacing: 16) {
-
-                                ForEach(categoryResults) { car in
-
-                                    NavigationLink {
-
-                                        CarDetailView(car: car)
-
-                                    } label: {
-
-                                        CarCard(car: car)
-                                            .frame(width: 220)
-
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                
+                                LazyHStack(spacing: 16) {
+                                    
+                                    ForEach(categoryResults) { car in
+                                        
+                                        NavigationLink {
+                                            
+                                            CarDetailView(car: car)
+                                            
+                                        } label: {
+                                            
+                                            CarCard(car: car)
+                                                .frame(width: 220)
+                                            
+                                        }
+                                        .buttonStyle(.plain)
                                     }
-                                    .buttonStyle(.plain)
                                 }
+                                .padding(.horizontal)
                             }
                             .padding(.horizontal)
                         }
-                            .padding(.horizontal)
-                        }
                         
-                   
+                        
                         VStack(alignment: .leading){
                             Text("Popular Brands")
                                 .font(.title2)
@@ -324,14 +305,14 @@ struct HomeView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 
                                 HStack {
-                                   
+                                    
                                     Button {
                                         
                                         selectedBrand = "Ferrari"
                                         
                                     } label: {
                                         
-                                        BrandCard(image: "ferrari", name: "Ferrari")
+                                        BrandCard(image: "ferrari_logo", name: "Ferrari")
                                         
                                     }
                                     .buttonStyle(.plain)
@@ -342,7 +323,7 @@ struct HomeView: View {
                                         
                                     } label: {
                                         
-                                        BrandCard(image: "BMW", name: "BMW")
+                                        BrandCard(image: "bmw_logo", name: "BMW")
                                         
                                     }
                                     .buttonStyle(.plain)
@@ -353,7 +334,7 @@ struct HomeView: View {
                                         
                                     } label: {
                                         
-                                        BrandCard(image: "Audi", name: "Audi")
+                                        BrandCard(image: "audi_logo", name: "Audi")
                                         
                                     }
                                     .buttonStyle(.plain)
@@ -364,7 +345,7 @@ struct HomeView: View {
                                         
                                     } label: {
                                         
-                                        BrandCard(image: "Lamborgini", name: "Lamborghini")
+                                        BrandCard(image: "lamborghini_logo", name: "Lamborghini")
                                         
                                     }
                                     .buttonStyle(.plain)
@@ -375,7 +356,7 @@ struct HomeView: View {
                                         
                                     } label: {
                                         
-                                        BrandCard(image: "Porsche", name: "Porsche")
+                                        BrandCard(image: "porsche_logo", name: "Porsche")
                                         
                                     }
                                     .buttonStyle(.plain)
@@ -386,71 +367,47 @@ struct HomeView: View {
                         .padding()
                         
                         if !selectedBrand.isEmpty {
-
-//                            Text("\(selectedBrand) Cars")
-//                                .font(.title2.bold())
-//                                .foregroundColor(.white)
-//                                .padding(.horizontal)
+                     
                             HStack {
-
+                                
                                 Text("\(selectedBrand) Cars")
                                     .font(.title2)
                                     .fontWeight(.bold)
-
+                                
                                 Spacer()
-
+                                
                                 Button {
-
+                                    
                                     selectedBrand = ""
-
+                                    
                                 } label: {
-
+                                    
                                     Image(systemName: "xmark.circle.fill")
                                         .font(.title2)
                                         .foregroundColor(.yellow)
-                                  
+                                    
                                         .background(.ultraThinMaterial)
                                         .clipShape(Circle())
                                 }
                             }
                             .padding(.horizontal)
-
-//                            LazyVGrid(columns: [
-//                                GridItem(.flexible()),
-//                                GridItem(.flexible())
-//                            ], spacing: 20) {
-//
-//                                ForEach(brandCars) { car in
-//
-//                                    NavigationLink {
-//
-//                                        CarDetailView(car: car)
-//
-//                                    } label: {
-//
-//                                        CarCard(car: car)
-//
-//                                    }
-//                                    .buttonStyle(.plain)
-//
-//                                }
-//
-//                            }
+                            
+                          
                             ScrollView(.horizontal, showsIndicators: false) {
-
+                                
                                 LazyHStack(spacing: 16) {
-
+                                    
                                     ForEach(brandCars) { car in
-
+                                        
                                         NavigationLink {
-
+                                            
                                             CarDetailView(car: car)
-
+                                            
                                         } label: {
-
+                                            
                                             CarCard(car: car)
                                                 .frame(width: 220)
-
+                                            
                                         }
                                         .buttonStyle(.plain)
                                     }
@@ -458,62 +415,45 @@ struct HomeView: View {
                                 .padding(.horizontal)
                             }
                             .padding(.horizontal)
-
+                            
                         }
-                       
+                        
                         Text("Trending Cars")
                             .font(.title2)
                             .fontWeight(.bold)
                             .foregroundColor(.white)
                             .padding()
-//                        LazyVGrid(columns: [
-//                            GridItem(.flexible()),
-//                            GridItem(.flexible())
-//                        ], spacing: 25) {
-//
-//                            ForEach(trendingCars) { car in
-//
-//                                NavigationLink {
-//
-//                                    CarDetailView(car: car)
-//
-//                                } label: {
-//
-//                                    CarCard(car: car)
-//
-//                                }
-//                                .buttonStyle(.plain)
-//                            }
-//                        }
-                    ScrollView(.horizontal, showsIndicators: false) {
-
-                        LazyHStack(spacing: 16) {
-
-                            ForEach(trendingCars) { car in
-
-                                NavigationLink {
-
-                                    CarDetailView(car: car)
-
-                                } label: {
-
-                                    CarCard(car: car)
-                                        .frame(width: 220)
-
+                        
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            
+                            LazyHStack(spacing: 16) {
+                                
+                                ForEach(trendingCars) { car in
+                                    
+                                    NavigationLink {
+                                        
+                                        CarDetailView(car: car)
+                                        
+                                    } label: {
+                                        
+                                        CarCard(car: car)
+                                            .frame(width: 220)
+                                        
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
                             }
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
-                    }
                         .padding()
                     }
-                
+                    .toolbar(.hidden)
                 }
-   
+                
             }
         }
     }
+}
                         #Preview{
                             HomeView()
                         }

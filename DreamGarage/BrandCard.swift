@@ -12,8 +12,11 @@ struct BrandCard: View {
             ZStack {
                 Image(image)
                     .resizable()
-                    .frame(width: 55, height: 55)
-                    .cornerRadius(10)
+                    .scaledToFit()
+                    .frame(width: 60, height: 60)
+                    .padding(8)
+                    .background(Color.white)
+                    .clipShape(Circle())
             }
 
             Text(name)

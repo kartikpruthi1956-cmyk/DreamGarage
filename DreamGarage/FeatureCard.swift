@@ -98,7 +98,7 @@ struct FeatureCard: View {
         .overlay(
 
             RoundedRectangle(cornerRadius: 25)
-                .stroke(.white.opacity(0.2), lineWidth: 1)
+                .stroke(.yellow.opacity(0.2), lineWidth: 5)
 
         )
         .shadow(radius: 15)
