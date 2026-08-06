@@ -69,13 +69,38 @@ struct SettingsView: View {
                             )
                         }
 
-//                        SettingsRow(icon: "moon.fill",title: "Dark Mode")
+                        NavigationLink {
+                            PrivacyView()
+                        } label: {
+                            SettingsRow(
+                                icon: "lock.shield",
+                                title: "Privacy"
+                            )
+                        }
 
-                        SettingsRow(icon: "lock.shield", title: "Privacy")
+                        NavigationLink {
 
-                        SettingsRow(icon: "globe",title: "Language")
+                            LanguageView()
 
-                        SettingsRow(icon: "dollarsign.circle", title: "Currency")
+                        } label: {
+
+                            SettingsRow(
+                                icon: "globe",
+                                title: "Language"
+                            )
+                        }
+
+                        NavigationLink {
+
+                            CurrencyView()
+
+                        } label: {
+
+                            SettingsRow(
+                                icon: "dollarsign.circle",
+                                title: "Currency"
+                            )
+                        }
 
                         NavigationLink {
 

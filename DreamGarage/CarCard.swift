@@ -7,6 +7,32 @@ struct CarCard: View {
 //    @EnvironmentObject var carStore: CarStore
 
 //    var car: Car
+    @AppStorage("selectedCurrency")
+    private var selectedCurrency = "INR"
+    
+    func formattedPrice() -> String {
+
+        let cleanPrice = car.price
+            .replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: ",", with: "")
+
+        let price = Double(cleanPrice) ?? 0
+
+        switch selectedCurrency {
+
+        case "USD":
+            return "$\(Int(price))"
+
+        case "EUR":
+            return "€\(Int(price * 0.86))"
+
+        case "GBP":
+            return "£\(Int(price * 0.74))"
+
+        default:
+            return "₹\(Int(price * 83))"
+        }
+    }
     
     var body: some View {
 
@@ -57,7 +83,9 @@ struct CarCard: View {
                 .lineLimit(2)
 //            minimumScaleFactor(0.8)
 
-            Text(car.price)
+//            Text(car.price)
+            
+            Text(formattedPrice())
                 .font(.subheadline)
                 .fontWeight(.bold)
                 .foregroundColor(.yellow)

@@ -4,7 +4,10 @@ import SwiftUI
 struct BookTestDriveView: View {
 
     let car: Car
-
+    
+    @AppStorage("selectedCurrency")
+    private var selectedCurrency = "USD"
+    
     @State private var selectedOption = "Test Drive"
 
     let options = [
@@ -23,8 +26,22 @@ struct BookTestDriveView: View {
             .replacingOccurrences(of: ",", with: "")
 
         let carPrice = Double(cleanPrice) ?? 0
+        var finalPrice = carPrice
 
-        let principal = carPrice - (Double(downPayment) ?? 0)
+        if selectedCurrency == "INR" {
+
+            finalPrice = carPrice * 83
+
+        } else if selectedCurrency == "EUR" {
+
+            finalPrice = carPrice * 0.86
+
+        } else if selectedCurrency == "GBP" {
+
+            finalPrice = carPrice * 0.74
+        }
+
+        let principal = finalPrice - (Double(downPayment) ?? 0)
 
         let annualRate = 9.0 / 100
         let monthlyRate = annualRate / 12
@@ -40,6 +57,30 @@ struct BookTestDriveView: View {
             (pow(1 + monthlyRate, months) - 1)
 
         return emiValue
+    }
+    
+    func formattedPrice() -> String {
+
+        let cleanPrice = car.price
+            .replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: ",", with: "")
+
+        let price = Double(cleanPrice) ?? 0
+
+        switch selectedCurrency {
+
+        case "INR":
+            return "₹\(Int(price * 83))"
+
+        case "EUR":
+            return "€\(Int(price * 0.86))"
+
+        case "GBP":
+            return "£\(Int(price * 0.74))"
+
+        default:
+            return "$\(Int(price))"
+        }
     }
 
     var body: some View {
@@ -94,7 +135,8 @@ struct BookTestDriveView: View {
                 }
                 if selectedOption == "Full Payment" {
 
-                    Text("Total Price: \(car.price)")
+//                    Text("Total Price: \(car.price)")
+                    Text("Total Price: \(formattedPrice())")
                 }
 
                 if selectedOption == "Test Drive" {

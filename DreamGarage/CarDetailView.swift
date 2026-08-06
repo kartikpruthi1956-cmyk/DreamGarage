@@ -6,7 +6,33 @@ struct CarDetailView: View {
     @State var car: Car
     @State private var addedToGarage = false
     @State private var showBookingSheet = false
+    @AppStorage("selectedCurrency")
+    private var selectedCurrency = "INR"
+    
+    func formattedPrice() -> String {
 
+        let cleanPrice = car.price
+            .replacingOccurrences(of: "$", with: "")
+            .replacingOccurrences(of: ",", with: "")
+
+        let price = Double(cleanPrice) ?? 0
+
+        switch selectedCurrency {
+
+        case "USD":
+            return "$\(Int(price))"
+
+        case "EUR":
+            return "€\(Int(price * 0.86))"
+
+        case "GBP":
+            return "£\(Int(price * 0.74))"
+
+        default:
+            return "₹\(Int(price * 83))"
+        }
+    }
+    
     var body: some View {
 
         ScrollView(showsIndicators: false) {
@@ -53,7 +79,7 @@ struct CarDetailView: View {
                                 .font(.system(size: 34, weight: .bold))
                                 .fontWeight(.bold)
                                 .foregroundColor(.yellow)
-                            Text(car.price)
+                            Text(formattedPrice())
                                 .font(.title2)
                                 .fontWeight(.semibold)
                                 .foregroundColor(.yellow)
