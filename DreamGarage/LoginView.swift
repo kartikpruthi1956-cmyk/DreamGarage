@@ -16,7 +16,7 @@ struct LoginView: View {
     
     var body: some View {
         if isLoggedin{
-            HomeView()
+            MainTabView()
         }else{
         NavigationStack{
             ZStack {

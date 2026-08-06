@@ -33,8 +33,6 @@ struct SettingsRow: View {
 }
 
 struct SettingsView: View {
-    
-    
 
     var body: some View {
 
@@ -53,11 +51,25 @@ struct SettingsView: View {
                             .font(.largeTitle.bold())
                             .foregroundColor(.white)
 
-                        SettingsRow(icon: "person.crop.circle",title: "Account")
+                        NavigationLink {
+                            ProfileView()
+                        }label: {
+                            SettingsRow(icon: "person.crop.circle",title: "Account")
+                        }
+                      
+                        NavigationLink {
 
-                        SettingsRow(icon: "bell",title: "Notifications")
+                            NotificationView()
 
-                        SettingsRow(icon: "moon.fill",title: "Dark Mode")
+                        } label: {
+
+                            SettingsRow(
+                                icon: "bell",
+                                title: "Notifications"
+                            )
+                        }
+
+//                        SettingsRow(icon: "moon.fill",title: "Dark Mode")
 
                         SettingsRow(icon: "lock.shield", title: "Privacy")
 
@@ -65,7 +77,17 @@ struct SettingsView: View {
 
                         SettingsRow(icon: "dollarsign.circle", title: "Currency")
 
-                        SettingsRow(icon: "doc.text", title: "Terms & Conditions")
+                        NavigationLink {
+
+                            AboutUsView()
+
+                        } label: {
+
+                            SettingsRow(
+                                icon: "doc.text",
+                                title: "Terms & Conditions"
+                            )
+                        }
 
                         SettingsRow(icon: "square.and.arrow.up", title: "Share App")
 

@@ -79,7 +79,8 @@ struct HomeView: View {
                             Spacer(minLength: 20)
                             
                             HStack{
-                                Button{
+                                NavigationLink{
+                                    NotificationView()
                                 }label:{
                                     Image(systemName: "bell.fill")
                                         .foregroundColor(.yellow)
