@@ -29,9 +29,8 @@ struct CurrencyView: View {
                 ForEach(currencies, id: \.0) { currency in
 
                     Button {
-
                         selectedCurrency = currency.0
-
+                        print("Saved Currency:", selectedCurrency)
                     } label: {
 
                         HStack {

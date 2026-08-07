@@ -2,35 +2,45 @@ import SwiftUI
 
 struct CarDetailView: View {
 
-//    let car: Car
     @State var car: Car
     @State private var addedToGarage = false
     @State private var showBookingSheet = false
+    
     @AppStorage("selectedCurrency")
-    private var selectedCurrency = "INR"
+    private var selectedCurrency: String = "INR"
+    
     
     func formattedPrice() -> String {
-
+        
         let cleanPrice = car.price
             .replacingOccurrences(of: "$", with: "")
             .replacingOccurrences(of: ",", with: "")
 
         let price = Double(cleanPrice) ?? 0
 
+        var convertedPrice = price
+        var symbol = "$"
+
         switch selectedCurrency {
 
-        case "USD":
-            return "$\(Int(price))"
+        case "INR":
+            convertedPrice = price * 83
+            symbol = "₹"
 
         case "EUR":
-            return "€\(Int(price * 0.86))"
+            convertedPrice = price * 0.86
+            symbol = "€"
 
         case "GBP":
-            return "£\(Int(price * 0.74))"
+            convertedPrice = price * 0.74
+            symbol = "£"
 
         default:
-            return "₹\(Int(price * 83))"
+            convertedPrice = price
+            symbol = "$"
         }
+
+        return "\(symbol)\(Int(convertedPrice))"
     }
     
     var body: some View {
@@ -238,8 +248,6 @@ struct CarDetailView: View {
                 }
                 .padding()
                 .sheet(isPresented: $showBookingSheet) {
-
-                    BookTestDriveView(car: car)
                 }
             }
 
@@ -250,6 +258,9 @@ struct CarDetailView: View {
     }
 
 }
-#Preview{
-   CarDetailView(car:cars[0])
+//
+#Preview {
+    NavigationStack {
+        CarDetailView(car: cars[0])
+    }
 }

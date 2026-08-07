@@ -3,7 +3,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var showMenu = false
     
-    @State private var selectedCategory = "X"
+    @State private var selectedCategory = ""
     
     @State private var selectedBrand = ""
     
@@ -37,7 +37,7 @@ struct HomeView: View {
     
     var categoryResults: [Car] {
         
-        if selectedCategory == "X" {
+        if selectedCategory.isEmpty {
             return []
         }
         
@@ -267,6 +267,8 @@ struct HomeView: View {
                                     Image(systemName: "xmark.circle.fill")
                                         .font(.title2)
                                         .foregroundColor(.yellow)
+                                        .background(.ultraThinMaterial)
+                                        .clipShape(Circle())
                                 }
                             }
                             .padding(.horizontal)
@@ -455,6 +457,6 @@ struct HomeView: View {
         }
     }
 }
-                        #Preview{
-                            HomeView()
-                        }
+#Preview{
+       HomeView()
+     }
